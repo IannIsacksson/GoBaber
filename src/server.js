@@ -23,6 +23,7 @@ class App {
         store: new LokiStore({
           path: path.resolve(__dirname, '..', 'tmp', 'sessions.db')
         }),
+        name: 'root',
         secret: 'MyAppSecret',
         resave: true,
         saveUninitialized: true
@@ -38,6 +39,8 @@ class App {
     })
 
     this.express.use(express.static(path.resolve(__dirname, 'public')))
+    // O set() passa configurações globais.
+    // Neste caso, diz para o express usar os arquivos njk como view engine
     this.express.set('view engine', 'njk')
   }
 
