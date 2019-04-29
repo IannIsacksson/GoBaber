@@ -7,7 +7,9 @@ const flash = require('connect-flash')
 
 class App {
   constructor () {
+    // Faz a função do app = this.express
     this.express = express()
+    // Resposavel por armazenar se a aplicação está ou não em ambiente de produção
     this.isDev = process.env.NODE_ENV !== 'production'
 
     this.middlewares()
@@ -16,6 +18,7 @@ class App {
   }
 
   middlewares () {
+    // Código para lidar com formulários
     this.express.use(express.urlencoded({ extended: false }))
     this.express.use(flash())
     this.express.use(
@@ -32,9 +35,14 @@ class App {
   }
 
   views () {
+    // Informar aonde as páginas vão está
     nunjucks.configure(path.resolve(__dirname, 'app', 'views'), {
+      // Função parecida com a nodemon.
+      // Usar apenas em ambiente de desenvolvimento (isDEv), em produção há perda de performance
       watch: this.isDev,
+      // Informa o nosso servidor "Express"
       express: this.express,
+      // Carrega automaticamente as páginas
       autoescape: true
     })
 
@@ -49,4 +57,5 @@ class App {
   }
 }
 
+// exporta apenas o express
 module.exports = new App().express
