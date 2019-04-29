@@ -4,14 +4,16 @@
   <p>Inicie um agendamento escolhendo um profissional abaixo:</p>
 
   <ul class="providers">
+    {# Este FOR é responsável por apresentar todos os usuários e imagens #}
     {% for provider in providers %}
-    <li class="provider">
-      <div>
-        <img src="" />
-        <strong>{{ provider.nome }}</strong>
-      </div>
-      <a href="">+</a>
-    </li>
+      <li class="provider">
+        <div>
+          {# Tag IMG chama automaticamente o que é passado em src #}
+          <img src="/files/{{ provider.avatar }}" />
+          <strong>{{ provider.name }}</strong>
+        </div>
+        <a href="">+</a>
+      </li>
     {% endfor %}
   </ul>
 
