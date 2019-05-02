@@ -4,6 +4,7 @@ const LokiStore = require('connect-loki')(session)
 const nunjucks = require('nunjucks')
 const path = require('path')
 const flash = require('connect-flash')
+const dateFilter = require('nunjucks-date-filter')
 
 class App {
   constructor () {
@@ -36,7 +37,7 @@ class App {
 
   views () {
     // Informar aonde as páginas vão está
-    nunjucks.configure(path.resolve(__dirname, 'app', 'views'), {
+    const env = nunjucks.configure(path.resolve(__dirname, 'app', 'views'), {
       // Função parecida com a nodemon.
       // Usar apenas em ambiente de desenvolvimento (isDEv), em produção há perda de performance
       watch: this.isDev,
@@ -45,6 +46,8 @@ class App {
       // Carrega automaticamente as páginas
       autoescape: true
     })
+
+    env.addFilter('date', dateFilter)
 
     this.express.use(express.static(path.resolve(__dirname, 'public')))
     // O set() passa configurações globais.

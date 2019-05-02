@@ -6,6 +6,7 @@ class SessionController {
   }
 
   async store (req, res) {
+    // Recupera o email e senha enviados pelo usuário, depois compara com o DB
     const { email, password } = req.body
 
     const user = await User.findOne({ where: { email } })
@@ -22,7 +23,13 @@ class SessionController {
 
     req.session.user = user
 
-    return res.redirect('/app/dashboard')
+    const { provider } = user
+
+    if (provider === false) {
+      return res.redirect('/app/dashboard')
+    } else {
+      return res.redirect('/app/schedule')
+    }
   }
 
   // Encerra a sessão
